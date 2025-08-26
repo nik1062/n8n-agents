@@ -1,0 +1,168 @@
+{
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -448,
+        -96
+      ],
+      "id": "f423161d-9db2-4de3-9097-939c830bd5fd",
+      "name": "When chat message received",
+      "webhookId": "a0e0dfa9-9c40-44c6-9ec0-3210ba82fa93"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "options": {
+          "systemMessage": "You are a helpful email assistance for nikunj\ns you  reply to  email on his behalf"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -48,
+        -96
+      ],
+      "id": "64ba1cd6-98f1-4d34-9729-99c39a311910",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        48,
+        96
+      ],
+      "id": "6f984960-3f23-4ed5-89b2-6737cc93c593",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        80
+      ],
+      "id": "3225eefd-0322-4634-a6b7-db2e29b5286d",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "3Yc8JBF3VgJ2aHQc",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      },
+      "notes": "You are an email-writing assistant.\nWhen the user asks you to send an email, always reply in JSON with the following keys:\n{\n  \"to\": \"recipient@example.com\",\n  \"subject\": \"Email subject\",\n  \"message\": \"Full email body here\"\n}\nDo not include anything else outside the JSON.\n"
+    },
+    {
+      "parameters": {
+        "content": "here we need to add credential in every setion because every nodes needed to be get added after you sign in that plateform other wise there will be noe output provided to the user\n",
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        304,
+        0
+      ],
+      "id": "6c4db860-d4d7-44b2-98ce-eacb15afbfe3",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', `you are a helpful email assistant for nikunj you reply to emails on his behalf `, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        208,
+        176
+      ],
+      "id": "1113b14a-8b9a-406f-a7a9-b7eb5374f3d1",
+      "name": "Send a message in Gmail",
+      "webhookId": "d36d33c4-b411-4a62-8929-52ffafc37c1a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "WCzcKDZIoujtEaUY",
+          "name": "Gmail account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "f43bc9fd-1a3c-40f5-8528-3501cbb17add",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d1c9628a5136779a75bd018889307eab115760b06ecceaa8bcc78c03d432dd60"
+  },
+  "id": "hcR5baAh5VnirMeQ",
+  "tags": []
+}
