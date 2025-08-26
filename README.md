@@ -18,6 +18,8 @@ File: [`email-assistant.json`](./email-assistant.json)
 4. Configure your credentials (Google Gemini + Gmail) inside n8n
 5. Activate and run 🚀
 
+## 📸 Workflow Screenshot
+![Workflow Screenshot](./screenshot.png)
 ---
 
 ⭐ If you find this useful, give the repo a star!
